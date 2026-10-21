@@ -6,3 +6,13 @@
 /*.rbxl.lock
 
 sourcemap.json
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+
+# Local-only secrets and personal AI settings
+.env
+.env.*
+CLAUDE.local.md
+.claude/settings.local.json

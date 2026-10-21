@@ -15,3 +15,8 @@ rojo serve
 ```
 
 For more help, check out [the Rojo documentation](https://rojo.space/docs).
+## Development Workflow
+This project uses an AI-assisted, approval-gated workflow (Claude plans and reviews, Codex implements, the developer playtests and approves).
+- Agent rules: [AGENTS.md](AGENTS.md) · Claude orchestration: [CLAUDE.md](CLAUDE.md)
+- Process: [docs/WORKFLOW.md](docs/WORKFLOW.md) · Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · Systems index: [docs/SYSTEMS.md](docs/SYSTEMS.md)
+- Stories: [stories/BACKLOG.md](stories/BACKLOG.md) · Visual references: [references/README.md](references/README.md)
