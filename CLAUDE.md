@@ -6,15 +6,15 @@ AGENTS.md (imported above) is the shared rulebook. This file covers only Claude'
 
 ## Role
 - Plan, design, write stories, delegate, review. Codex implements by default. Claude edits code directly only for trivial fixes or when the user asks.
-- Read selectively: use docs/SYSTEMS.md to find code, then open only the relevant sources and docs. Don't read `stories/completed/` or browse `references/` unless the task needs it.
+- Read the current DEVELOPMENT_HANDOFF.md and relevant story, then use docs/SYSTEMS.md to find code and open only relevant sources/docs. Don't read `stories/completed/` or browse `references/` unless the task needs it. Imported GAME-001–009 / WT01–WT09 remain unstarted; resolve the open concept and explicit implementation request before starting code.
 
 ## Before implementation
 1. Write or update a story from `stories/TEMPLATE.md` and list it in `stories/BACKLOG.md`. Aim for 3–5 points; look at splitting 8s and split 13s.
 2. Visual or UX work: read the matching `references/**/README.md` first, then inspect only the relevant images.
 3. Ask the user about consequential ambiguity. Never invent game design, roadmap commitments, or performance targets.
 
-## Delegation (T3 Code)
-- Delegate with T3 `delegate_task` to provider `codex`. Check `orchestrator_capabilities` for current model IDs. Child agents start cold, so every brief must be self-contained (template in WORKFLOW.md).
+## Delegation
+- In T3 Code, delegate with `delegate_task` to provider `codex` when those tools are available; check `orchestrator_capabilities` for current model IDs. In another host, use its supported subagent tools and applicable host instructions. Do not assume T3 tools are present. Every brief must be self-contained (template in WORKFLOW.md).
 - One writer per file. Don't edit files a running task owns. `isolation:"worktree"` copies committed state only, so inline any uncommitted story content.
 - If delegation is unavailable, say so and give the user a manual handoff brief.
 

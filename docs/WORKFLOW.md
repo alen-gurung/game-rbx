@@ -1,126 +1,158 @@
 # Development Workflow
 
-**Plan → Implement → Review → Validate → User Playtest → User Approval → Commit → Push**
+Updated 22 October 2026, Europe/Paris.
 
-Roles: **User** (product owner, playtester, approver) · **Claude** (architect, planner, reviewer) · **Codex** (implementer).
+**Plan → Authorized implementation → Review → Validate → User Playtest → User Approval → Commit → Push**
 
-## 1. Story lifecycle
+The user owns product choices, playtest approval and Git authorization. Claude's established role is planning/review and Codex's is implementation, subject to the user's actual request and the host's available tools. Use the shared rules in [AGENTS.md](../AGENTS.md) and the applicable current story.
+
+## 1. Current authorization and story lifecycle
+
+The established work is planning. Wind Up a Toy is the working concept; inflation-release remains an open alternative. This documentation update does not request or authorize game implementation. All GAME-001–GAME-009 stories are **Blocked** on final concept selection and an explicit implementation request, with later stories also waiting for their listed dependencies. The original planning aliases are WT01–WT09. M1 contains exactly GAME-001–GAME-003 (WT01–WT03); do not add setup, polish or economy stories to that milestone.
 
 | Status | Meaning | Location |
 |---|---|---|
-| Proposed | Idea captured; not yet refined | `stories/BACKLOG.md` only |
-| Ready | Story file written, criteria agreed, ambiguity resolved | `stories/active/` |
-| In Progress | Being implemented | `stories/active/` |
-| In Review | Implementation done; Claude reviewing and validating | `stories/active/` |
-| Awaiting Playtest | Handed to user with playtest steps | `stories/active/` |
-| Done | Approved, committed, pushed, verified | `stories/completed/` |
-| Blocked | Waiting on a decision or dependency (note why) | wherever it was |
+| Proposed | Idea captured, not yet refined | `stories/BACKLOG.md` only |
+| Ready | Story and criteria agreed, consequential ambiguity resolved, dependencies satisfied and implementation authorized | `stories/active/` |
+| In Progress | Authorized implementation is underway | `stories/active/` |
+| In Review | Implementation complete; review and validation underway | `stories/active/` |
+| Awaiting Playtest | Review/check results and playtest steps handed to the user | `stories/active/` |
+| Done | Acceptance evidence complete, user approved, committed and pushed with push verified | `stories/completed/` |
+| Blocked | Waiting on a stated decision, authorization or dependency | Keep the existing location and state the blocker |
 
-Every meaningful gameplay feature needs a story before implementation. Small fixes (typos, one-line bugs) don't, but they still go through review and the approval gate.
+Meaningful gameplay features need a story before implementation. Small documentation fixes and one-line corrections need not invent a gameplay story, but still need appropriate review and the explicit approval gate before committing or pushing. A polished plan is not permission to build it, and completing a game backlog is not permission to publish.
 
-## 2. Planning (Claude)
+## 2. Planning and scope
 
-1. Understand the request. Ask the user when intent is unclear.
-2. Use [SYSTEMS.md](SYSTEMS.md) to locate the affected systems, and read only those sources and docs.
-3. Visual features: find the relevant `references/**/README.md`, read it, and inspect only the images it points to. Turn what you find into acceptance criteria. Ask about significant ambiguity. See [references/README.md](../references/README.md).
-4. Write the story from [stories/TEMPLATE.md](../stories/TEMPLATE.md) as `stories/active/GAME-###-short-slug.md`, and add a row to [BACKLOG.md](../stories/BACKLOG.md).
-5. Get user approval of the design for consequential choices: new mechanics, data schema, monetization, and architecture changes (record those in [DECISIONS.md](DECISIONS.md)).
+1. Read [GAME_DESIGN.md](GAME_DESIGN.md), [ROADMAP.md](ROADMAP.md), the relevant story and decision entries. Use [SYSTEMS.md](SYSTEMS.md) to locate affected source. Preserve the final-concept question until the user resolves it.
+2. For gameplay engineering, use the personal `roblox-gameplay` skill when available. For native UI/Figma work use `roblox-figma-ui`; for map, lighting and world-feedback work use `roblox-world-design`. Skills add discipline-specific guidance; they do not authorize implementation or change scope.
+3. For visual work, read the matching `references/**/README.md` and relevant images when present. Preserve approved Figma/native components and shared themes. Supplied bottle screenshots inform readability and flow; they do not establish exact economics or automation rules. Prior coconut UI evidence does not validate this game.
+4. Create or update a story using [stories/TEMPLATE.md](../stories/TEMPLATE.md), store it in `stories/active/GAME-###-short-slug.md`, and maintain [BACKLOG.md](../stories/BACKLOG.md). Keep the original WT alias when importing the existing nine stories so their acceptance criteria remain traceable.
+5. Resolve consequential game design, data schema, monetization and architecture choices with the user when needed, recording actual decisions in [DECISIONS.md](DECISIONS.md). The imported pure Rules, one Config folder, central network contract and ownership requirements are established planning constraints; concrete unresolved tools and APIs remain open.
+6. Before any Studio mutation, establish the intended development project/place and inspect its current state and applicable instructions. An unrelated open place is not the destination. Preserve authored content and confirm the source/export procedure.
 
 ### Sizing
-Points measure relative complexity, uncertainty, and risk, not hours. Use 1, 2, 3, 5, 8, 13.
-- Prefer 3–5 point vertical slices: server logic + remotes + client/UI for one behaviour.
-- Look at splitting an 8. Split a 13 before implementation.
-- Don't split tightly coupled work just to hit a number, and don't create stories for trivial edits.
-- Group related stories under an epic name in the backlog. Plan only as far ahead as current priorities need.
 
-## 3. Delegation to Codex (T3 Code)
+Points measure relative complexity, uncertainty and risk, not hours. Use 1, 2, 3, 5, 8 and 13 for newly estimated work; prefer 3–5 point vertical slices, review an 8 for splitting, and split a 13 before implementation. The imported plan's M/S sizes are relative labels, not approved point estimates or dates; do not silently convert them. Keep tightly coupled acceptance work together, and do not turn buttons, counters or check setup into extra M1 stories.
 
-**Verified 2026-10-21:** `orchestrator_capabilities` lists a `codex` provider with `canRunCrossProviderChildTask: true`. Re-check model IDs at delegation time; don't hard-code them.
+## 3. Delegation and ownership
 
-- Call `delegate_task` with target provider `codex`, keep the returned `taskId`, and track it with `task_status`. Every correction round is a **new** `delegate_task` call with a distinct `clientRequestId`. That call includes the original brief, the review findings, and any open objections.
-- Child agents **do not** share this conversation. They get AGENTS.md from the repo and nothing else, so the brief must stand alone.
-- **Shared checkout (default):** Codex edits the working tree directly. Claude must not edit the same files until the task finishes.
-- **Worktree isolation** (`isolation:"worktree"`): use it for parallel stories touching disjoint files. It branches from the last *commit*, so uncommitted story files and docs are missing; paste their content into the brief.
-- Never run two writers on overlapping files.
+Delegation capabilities depend on the host. Inspect the tools available in the current session before selecting an orchestration path; do not assume a T3 API or provider/model exists in every environment.
 
-### Delegation brief template
+- **T3 Code:** the prior 2026-10-21 record reported a Codex cross-provider capability. Treat that as historical evidence. When running in T3, re-check `orchestrator_capabilities` and current model IDs before using `delegate_task`; retain its task identifier and use the supported status API. Follow that host's correction/retry rules, including distinct request IDs where required.
+- **Built-in agent delegation:** use it when the current host actually exposes it and the work benefits from parallelism. Describe ownership and dependencies explicitly; whether children inherit history depends on that tool's contract.
+- **Manual handoff:** when no suitable delegation tool is available, report that limit and provide a self-contained handoff brief. Do not claim a task was delegated when it was not.
+- Give each file one writer. Do not edit files a running worker owns. Shared checkouts share uncommitted changes; verify the actual isolation behavior before choosing a worktree. If worktrees start from committed state, include any needed uncommitted story content in the brief.
+- Workers may prepare independent local assets at distinct paths. One coordinator applies mutations to the shared Studio place and verifies the combined result.
+
+### Delegation brief
+
+```text
+Story: GAME-### — title (original WT alias, if applicable)
+Story path: stories/active/GAME-###-slug.md
+Authorization: actual user request and any unresolved blocker
+Objective: one or two sentences describing the player outcome
+Files owned: exact paths to create or modify
+Do not change: other workers' files, out-of-scope systems, default.project.json or aftman.toml without approval
+Required behavior and acceptance criteria: include the full relevant criteria
+Source/design references: exact paths; inline content unavailable in the worker's checkout
+Architecture: pure production Rules, one Config source, central contract, separate validated feature handlers, explicit player/attempt ownership
+Validation: configured build/rule/static/format commands, then relevant Studio evidence; disclose unavailable checks
+Report: files changed, criterion evidence, checks actually run, risks and open items
+Do not commit, push or publish.
 ```
-Story: GAME-### — <title>   (full story: stories/active/GAME-###-slug.md; content inlined below if uncommitted)
-Objective: <one or two sentences>
-Files in scope: <paths to create/modify>
-Do NOT change: <files/systems>, default.project.json, aftman.toml
-Required behaviour: <bullets>
-Acceptance criteria: <copied from story>
-Relevant docs/references: <paths>
-Validation: rojo build -o <temp-dir>/check.rbxlx; <other checks>
-Report back: files changed, how each criterion is met, checks run + output, anything unverified or out of scope.
-Do not commit or push.
-```
 
-### Manual fallback
-If `delegate_task` is unavailable or fails, Claude reports the limitation and prints the brief above. The user pastes it into a Codex thread, then tells Claude when it's done so Claude can review.
+## 4. Implementation and review boundaries
 
-## 4. Review (Claude)
+Only begin after the concept is selected and implementation is explicitly requested. If inflation-release is chosen, revise the first three stories around inflation, escaping-air flight, deflation and improved landing distance, and update later theme-specific criteria before coding. Do not build both concepts or an interchangeable framework by default.
 
-Review the full `git diff` and new files against:
-- Acceptance criteria, item by item.
-- Scope: no unrelated or architectural changes slipped in.
-- Security: every remote handler validates types, ranges, ownership, rate, and cooldown. No client-trusted values, and no RemoteFunction calls server→client that could yield forever.
-- Data: DataStore calls are `pcall`-wrapped with retry. No data-loss paths. No schema change without a migration plan and approval.
-- Lifecycle: connections are cleaned up and `PlayerRemoving` is handled. No leaks in respawn loops.
-- Multiplayer: behaviour is correct with more than one player, including joins mid-session.
-- Conventions in [AGENTS.md](../AGENTS.md), and visual references respected.
+For each authorized story, review the full diff and new files against:
 
-Send findings back as a new delegated task. Repeat until clean.
+- Acceptance criteria, file scope and milestone boundaries. GAME-001 establishes the local check workflow; M1 does not include Wins, rebirth, saving or a finished decorated lobby.
+- Production Rules and dependencies use ordinary data with explicit inputs and no Roblox objects/services, hidden clocks, `script` hierarchy, network or persistence. Test the same modules used by the game.
+- Balance values have one data-only source with explicit units and config validation. Displays and calculations use that source; fixtures record the tested values and revision.
+- The server validates message shape, finite ranges, ownership, current state, eligibility and rate/timing. No client-supplied totals, prices or progress determine rewards. Feature handlers remain separate from the central contract.
+- Player/session state, captured launch inputs, deterministic scored progress, once-only settlement and cancellation are correct. Delayed callbacks cannot revive an old session; temporary objects, effects and connections clean up without affecting another player.
+- Persistence changes use safe load/failure behavior, protected calls and retry/backoff, consistent snapshots and session conflict protection. Schema or production-data changes require the applicable approval; saving is not introduced before its story.
+- UI/reference fidelity, toy contact/readability, camera recovery and actual input flows have evidence. Cosmetic failures cannot block settlement/recovery, but required visual cues remain open until demonstrated.
+- Authored assets have recoverable sources and provenance. Builders replace only owned content and preserve unrelated geometry, spawns, lighting and user edits.
 
-## 5. Validation
+Send concrete review findings to the owning worker or fix within the authorized file ownership, then rerun the affected checks. Do not expand tests repeatedly after sufficient passing evidence unless a new change or unresolved concern warrants it.
 
-| Check | Command | Status |
+## 5. Verification
+
+### Actual repository state
+
+| Check | Current setup | Evidence from this documentation update |
 |---|---|---|
-| Rojo project builds | `rojo build -o <temp-dir>/check.rbxlx` (outside the repo, or the gitignored `game-rbx.rbxlx`) | Available |
-| Lint / format / type-check | none configured (no selene, StyLua, or luau-lsp in repo) | Not available |
-| Automated tests | none | Not available |
-| Runtime behaviour | Roblox Studio playtest by the user | Manual only |
+| Build and mapping | Rojo 7.7.1 pin and `default.project.json` exist; command is `rojo build -o <temp-dir>/check.rbxlx` | Configuration inspected; command not run |
+| Offline production-rule tests | No Rules modules, compatible runner or tests configured | Not available; no pass claimed |
+| Static analysis and formatting | No configured analyzer, type checker or formatter | Not available; no pass claimed |
+| Studio behavior | Depends on access to the intended place and current tools | No sync, runtime or visual verification performed |
+| Physical devices and representative load | No target or results established | Unverified |
 
-Agents can't run Roblox Studio. Runtime behaviour is unverified until the user playtests.
+During GAME-001 implementation, establish and document one repeatable check entry point covering build/mapping, offline production-rule tests, static analysis and formatting. Record actual tool versions and commands. Do not change the approved map/tool pin or install a broad stack as part of a documentation task. Missing tools, missing test targets, skipped checks and unrun checks must remain explicit; they cannot produce an overall pass.
 
-## 6. Playtest handoff
+Prove that the selected runner executes the same production Luau Rules used in Studio. Independent expected values should follow the specification; a Python/JavaScript rewrite of the rules is not a substitute. Validate production Config as well. If adding a custom verifier, exercise it against a deliberately broken small case and a missing target so it cannot silently pass.
 
-Give the user:
-1. **Setup:** `rojo serve`, connect the Studio plugin, and any Studio settings needed (e.g. API Services access).
-2. **Steps:** numbered actions and the expected result for each, mapped to acceptance criteria.
-3. **Multiplayer:** Test → Clients and Servers → *N* players, when relevant.
-4. **Regressions** to spot-check.
-5. **Files changed**, known risks, and what was *not* verified.
+### Evidence by story
 
-Then set the story to *Awaiting Playtest* and wait.
+| Story | Offline evidence as implemented | Studio/player evidence |
+|---|---|---|
+| GAME-001 (WT01) | Starter wind, exhaustion/finish, forward-distance cap and attempt transitions | Key/feet and terminal motion; follow camera; interruption and ten retries; basic isolation |
+| GAME-002 (WT02) | Below/at/above obstacle thresholds, repeated fixed fixtures and monotonic progress | Actual contact/reactions, obstacle resets and readable low/medium/high attempts |
+| GAME-003 (WT03) | Fractional gains, Level boundaries, positive tick interval and training sufficient to pass the early obstacle | Validated timing, Stop/no stacking, earned improvement and full touch flow |
+| GAME-004–GAME-006 (WT04–WT06) | Once-only rewards, bench eligibility, affordability and complete rebirth transitions | Duplicate requests, interruptions, displayed costs and authoritative state changes |
+| GAME-007 (WT07) | Focused action/objective-state checks where pure logic applies | Fresh-player guidance and actual training/attempt/improvement; phone readability |
+| GAME-008–GAME-009 (WT08–WT09) | Pure profile/transition validation where applicable | Real save/load/retry and conflict cases, overlapping players, late joins, device/load checks |
 
-**DataStores in Studio:** with "Enable Studio Access to API Services" on, Studio reads and writes the experience's **real** DataStores. Use a separate test experience or a dev-only key scope before testing persistence. Never point tests at production player data without explicit approval.
+Run relevant local checks before using a Studio playtest as acceptance evidence. Necessary Studio inspection and debugging may occur earlier. Agents may inspect or run Studio checks when the current environment provides the capability; otherwise hand those checks to the user and keep them unverified. Tool access does not prove a test occurred.
 
-## 7. Approval gate and Git
+Before acceptance testing, confirm that local source and assets reached the intended Studio place through content comparison or a meaningful revision/hash check. Equal source lengths alone do not prove freshness. Exercise the actual player inputs and shipped handlers; a diagnostic probe or successful asset import does not establish integration.
 
-Nothing is committed or pushed until the user explicitly approves *this* change set. If substantial changes happen after approval, ask again.
+Capture the actual camera and tested phone viewport, selected tuning fixtures, device/environment, result and limitations. Distinguish emulation from a physical phone, prepared profiles from earned progression, simulated failures from real save-environment behavior, and two-player correctness from representative capacity. Numerical tests cannot demonstrate visual quality or enjoyment.
+
+Record reproduced engine pitfalls in the owning story's verification log, with the trigger, evidence/cause, fix and regression check. Add a reusable helper when a repeated need is demonstrated; do not accumulate speculative traps or claim imported helpers are verified.
+
+## 6. User playtest and approval
+
+Agent-run checks supplement the user's playtest. They do not remove the established user playtest and explicit approval gate. Hand off:
+
+1. **Setup:** the verified source revision, intended place, `rojo serve`/plugin connection and relevant settings. Preserve unmapped authored content.
+2. **Steps:** numbered actions and expected outcomes mapped to acceptance criteria, with reproducible profile/course/config fixtures.
+3. **Multiplayer:** relevant clients-and-server count and overlapping actions; name any population target that remains untested.
+4. **Regressions and recovery:** interruption, reset, Retry, cleanup and affected existing behavior.
+5. **Evidence and limits:** changed files, executed check results, captures, tested device/viewport, risks and every unverified criterion.
+
+Set the story to **Awaiting Playtest** when that handoff is ready and wait for the user's results/approval. Keep failed or blocked criteria open. For M1, also record five consecutive attempts, including an unchanged-Power repeat and earned improvement; record an observer's explanation of why the toy stopped and what changed. Review engagement/pacing before expanding into M2. Technical completion alone does not establish enjoyment.
+
+**Persistence testing:** Studio API access can reach an experience's real DataStores. Establish a separate test experience or deliberate development-only key scope before testing GAME-008. Do not run tests against production player data without explicit approval. Do not enable or change save-environment settings speculatively during documentation work.
+
+## 7. Git gate
+
+Nothing is committed or pushed until the user explicitly approves that change set. Reconfirm only if substantial changes occur after approval. Preserve unrelated work and existing branch rules.
 
 After approval:
-1. Show the files to be committed (`git status`, diff summary). Include the story and doc updates.
-2. Stage only those files, by explicit path. Never `git add -A` with unrelated changes present.
-3. Commit as `type(scope): summary [GAME-###]`, for example `feat(inventory): add item equip flow [GAME-014]`. Types: feat, fix, refactor, docs, chore, test.
-4. Push to the current branch's upstream (today `game-rbx/master`). If the branch or remote isn't the intended one, ask first.
-5. Verify with `git status` and `git log -1`, and confirm the local and remote heads match.
-6. Then move the story to `stories/completed/`, set it to Done, and update BACKLOG.md. Include that move in the same commit if it's done before committing, or ask before making a follow-up commit.
-7. Report the commit hash, branch, and push result. If the push fails, report the failure. The story isn't Done.
 
-Never force-push, rewrite pushed history, delete branches, or discard uncommitted work without explicit permission. Respect branch protection and PR rules if any are added.
+1. Inspect current status, branch and remote; show the exact files and diff summary to be included. D-003 records the intended `master` branch and `game-rbx` remote, but inspect actual state rather than assuming it.
+2. Stage only the approved paths. Never stage unrelated changes with a blanket command.
+3. Commit as `type(scope): summary [GAME-###]` for story work. Supported types include feat, fix, refactor, docs, chore and test; do not invent a gameplay story number for a documentation-only cleanup.
+4. Push to the intended branch upstream; resolve any destination mismatch with the user before changing it. Never force-push or rewrite published history without explicit permission.
+5. Verify the commit, working-tree status and local/remote heads. Report the hash, branch and push result. A failed push or incomplete approval/evidence leaves the story short of Done.
+6. Ensure the story move to `stories/completed/` and backlog update are part of the approved change set. They may be prepared in the same commit only after acceptance and user approval are complete; if a later follow-up commit is needed, obtain approval for it. The Done status is effective only after the push is verified.
+
+No destructive Git commands, branch deletion, discarded local work or publication are authorized by ordinary documentation upkeep.
 
 ## 8. Documentation upkeep
 
 | Change | Update |
 |---|---|
-| New/changed mechanic | [GAME_DESIGN.md](GAME_DESIGN.md) |
-| New/changed system, remote, DataStore | [ARCHITECTURE.md](ARCHITECTURE.md) + [SYSTEMS.md](SYSTEMS.md) |
+| Mechanic or concept choice | [GAME_DESIGN.md](GAME_DESIGN.md), affected stories and decision entry |
+| System, remote or DataStore | [ARCHITECTURE.md](ARCHITECTURE.md) and [SYSTEMS.md](SYSTEMS.md) |
 | Significant technical choice | [DECISIONS.md](DECISIONS.md) |
-| Priorities/milestones (user-confirmed) | [ROADMAP.md](ROADMAP.md) |
-| Story progress | story file + [BACKLOG.md](../stories/BACKLOG.md) |
-| Process change | this file |
+| Confirmed scope or milestone | [ROADMAP.md](ROADMAP.md) and [BACKLOG.md](../stories/BACKLOG.md) |
+| Story state, fixtures or test evidence | Story file and [BACKLOG.md](../stories/BACKLOG.md) |
+| Reproduced engine pitfall/fix | Owning story verification log; reusable helper only when warranted |
+| Process change or configured check commands | This file |
 
-Edit only the affected sections. Keep AGENTS.md and CLAUDE.md stable and short; they load into every session.
+Edit affected sections, distinguish current implementation from planned behavior, and retain genuinely unresolved decisions as explicit open items. Keep AGENTS.md and CLAUDE.md short. Historical prototypes, source reviews and portable base templates provide context; they do not override the current concept question, story criteria or authorization boundary.
