@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "previews",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "const h=require('http'),f=require('fs'),p=require('path');const root=p.resolve('previews');const t={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.json':'application/json','.mp4':'video/mp4','.webm':'video/webm'};h.createServer((q,r)=>{let u=decodeURIComponent(q.url.split('?')[0]);let fp=p.join(root,u);if(!fp.startsWith(root)){r.writeHead(403);return r.end();}f.stat(fp,(e,s)=>{if(!e&&s.isDirectory()){const l=f.readdirSync(fp).map(n=>`<li><a href='${p.posix.join(u,n)}${f.statSync(p.join(fp,n)).isDirectory()?'/':''}'>${n}</a></li>`).join('');r.writeHead(200,{'Content-Type':'text/html'});return r.end(`<ul>${l}</ul>`);}f.readFile(fp,(e2,d)=>{if(e2){r.writeHead(404);return r.end('not found');}r.writeHead(200,{'Content-Type':t[p.extname(fp)]||'application/octet-stream','Cache-Control':'no-store'});r.end(d);});});}).listen(5500,'127.0.0.1',()=>console.log('previews on http://localhost:5500'));"
+      ],
+      "port": 5500
+    }
+  ]
+}

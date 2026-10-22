@@ -2,7 +2,7 @@
 
 Updated 22 October 2026, Europe/Paris.
 
-This is the local index of the nine established development stories. **Planning is complete; every story is not started and Blocked.** Wind Up a Toy is the working concept, while Inflate and Release remains an open alternative. Confirm the concept and explicitly request implementation before starting game work. These populated documents do not grant implementation, commit, push or publishing approval.
+This is the local index of the nine established development stories. **GAME-001 is In Progress; the other eight are not started and Blocked.** The user selected Wind Up a Toy for the prototype (D-008); Inflate and Release remains a possible future reconsideration. Only GAME-001 is authorized for implementation. These populated documents do not grant implementation, commit, push or publishing approval.
 
 - **Local IDs:** `GAME-###`, sequential and never reused. **Next ID: GAME-010.**
 - **Original IDs:** `WT01`–`WT09` remain permanent aliases for the matching `GAME-001`–`GAME-009` stories below. This migration creates no extra story and changes no dependency.
@@ -17,7 +17,7 @@ This is the local index of the nine established development stories. **Planning 
 
 | Local story / original alias | Title | Epic | Original size | Points | Status | Direct story dependencies |
 |---|---|---|---|---|---|---|
-| [GAME-001 / WT01](active/GAME-001-release-duck-attempt.md) | Release a duck and complete an attempt | M1 — Initial playable loop | M | Unestimated | Blocked — not started | None |
+| [GAME-001 / WT01](active/GAME-001-release-duck-attempt.md) | Release a duck and complete an attempt | M1 — Initial playable loop | M | 8 | In Progress — visuals approved as placeholders; awaiting playtest | None (D-008 concept gate resolved) |
 | [GAME-002 / WT02](active/GAME-002-obstacles-and-power.md) | Pass an obstacle with more Power | M1 — Initial playable loop | M | Unestimated | Blocked — not started | [GAME-001 / WT01](active/GAME-001-release-duck-attempt.md) |
 | [GAME-003 / WT03](active/GAME-003-train-and-improve.md) | Train and improve the next attempt | M1 — Initial playable loop | M | Unestimated | Blocked — not started | [GAME-002 / WT02](active/GAME-002-obstacles-and-power.md) |
 | [GAME-004 / WT04](active/GAME-004-wins-and-flags.md) | Earn Wins and pursue the next flag | M2 — Progression and first session | M | Unestimated | Blocked — not started | [GAME-003 / WT03](active/GAME-003-train-and-improve.md) |

@@ -1,0 +1,42 @@
+--!strict
+-- Shared HUD visual values (not balance). Plain data so tools/preview.luau can render the same layout.
+-- Colors are RGB 0-255; sizes are Roblox GUI offset pixels.
+return table.freeze({
+	font = "FredokaOne",
+	colors = table.freeze({
+		primary = { 255, 200, 40 },
+		primaryText = { 48, 34, 8 },
+		stroke = { 48, 34, 8 },
+		panel = { 28, 32, 44 },
+		panelText = { 250, 248, 240 },
+		mutedText = { 196, 202, 216 },
+		secondary = { 236, 238, 244 },
+		secondaryText = { 40, 44, 56 },
+		meterTrack = { 28, 32, 44 },
+		windFull = { 96, 204, 96 },
+		windMid = { 250, 176, 40 },
+		windEmpty = { 232, 76, 60 },
+	}),
+	launch = table.freeze({ width = 260, height = 72, bottomMargin = 28, textSize = 34, text = "Wind up!" }),
+	leave = table.freeze({ width = 112, height = 48, margin = 16, textSize = 22, text = "Leave" }),
+	meter = table.freeze({ width = 280, height = 30, topMargin = 8, textSize = 20, label = "Wind" }),
+	result = table.freeze({
+		widthScale = 0.92,
+		maxWidth = 460,
+		height = 84,
+		bottomMargin = 12,
+		padding = 18,
+		titleTop = 10,
+		detailTop = 46,
+		titleSize = 28,
+		detailSize = 22,
+		retryWidth = 150,
+		retryHeight = 60,
+		retryText = "Retry",
+		exhaustedTitle = "Out of wind!",
+		finishedTitle = "Reached the finish!",
+	}),
+	notice = table.freeze({ text = "Run cancelled. No result.", textSize = 22, seconds = 2.5 }),
+	cornerRadius = 14,
+	strokeThickness = 3,
+})

@@ -6,7 +6,13 @@ Updated 22 October 2026, Europe/Paris.
 
 The user requested filling the Markdown documentation in this repository from the established planning work. The working design, roadmap, architecture requirements and nine stories are recorded here. This is documentation work; the earlier instruction not to start coding remains in force. That initial update changed documentation only. A subsequent user request organized the reference library into UI features, mechanics, environments, models, animation, VFX and audio. Existing screenshots were moved intact; no gameplay source, image content, build mapping, toolchain settings, Studio place or publishing changed.
 
-Wind Up a Toy remains the working concept. Inflate and Release is an open alternative, not a second implementation. All nine stories are not started and are recorded as Blocked pending concept resolution and an explicit implementation request, plus their story dependencies. The starter scripts are not completed gameplay.
+**22 October 2026 update:** The user selected Wind Up a Toy for this prototype (D-008) and explicitly authorized implementing **GAME-001 / WT01 only**. Inflate and Release remains a possible future reconsideration at the M1 review. The user approved pinning Lune 0.11.1, selene 0.32.0 and StyLua 2.6.0 in `aftman.toml` (D-009). They also approved a new Rojo-built `game-rbx.rbxlx` in the repository root (gitignored) as the Studio destination. GAME-001 is In Progress with a refined file scope, tuning and contract in its story file. GAME-002–GAME-009 remain Blocked. The user playtests GAME-001 before GAME-002 begins, and nothing is committed, pushed or published without their approval.
+
+## Mandatory visual creation and approval
+
+Every new or revised UI component, map design, model, asset, animation and VFX must be created with Claude Design or Claude Code, including prototypes, placeholders and blockouts. Present the finished version in Claude Desktop and obtain explicit user approval before import, upload, sync, integration or commit. Animations and VFX require a moving or playable timing preview, not still images or source code alone. If the required creator or Desktop preview is unavailable, report the blocker and leave that work pending without substituting another creator/viewer.
+
+This gate applies within the current GAME-001 authorization and does not change story scope or statuses. Preserve existing authored content and prior approvals for unchanged work. Relevant Studio/gameplay-camera/device verification follows visual approval. The shared [AGENTS.md](AGENTS.md) rule and [workflow](docs/WORKFLOW.md) govern this sequence over older role defaults or direct-to-Studio instructions.
 
 ## Read next
 
@@ -31,7 +37,7 @@ Establish repeatable build, offline rules, static and formatting checks when cod
 
 ## Next action
 
-The documentation is ready for a concept decision or further planning. When the user requests implementation, resolve the concept from the latest instruction, inspect this repository and the intended Studio place, refine GAME-001's exact file scope and tool choices, and begin only the first story. If inflation-release is selected, revise the themed story criteria before coding. Do not create a general framework, implement later milestones early or treat an unrelated open place as the destination.
+Finish the GAME-001 review and hand it to the user for a Studio playtest using the steps in the story's verification log. Wait for their results and approval before committing, and don't start GAME-002 until they request it. Don't create a general framework, implement later milestones early, or treat an unrelated open place as the destination.
 
 ## Provenance and verification limits
 

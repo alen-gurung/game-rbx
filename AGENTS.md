@@ -1,5 +1,13 @@
 # AGENTS.md — game-rbx
 
+## Mandatory Claude creation and approval
+
+- Every UI component, map design, model, asset, animation and VFX **MUST be created with Claude Design or Claude Code**. This includes prototypes, placeholders, blockouts and revisions.
+- The finished version must be viewable in **Claude Desktop** for review. Animations and VFX require a moving or playable preview that demonstrates their timing; still images or source code alone are insufficient.
+- Present the finished version and obtain the user's explicit approval **before any import, upload, sync, integration or commit** of those outputs. Approval applies to the presented version; revised outputs require renewed approval. General implementation authorization does not waive this gate.
+- If the required Claude creator or Claude Desktop preview is unavailable, report the blocker and leave the visual work pending. Do not substitute another creator or review application.
+- Preserve existing authored content and prior approvals for unchanged work; do not delete or rebuild it merely to retrofit this rule. Apply the gate to all new or revised visual outputs. After approval, perform the relevant Studio, gameplay-camera, device and runtime verification; the Claude Desktop preview does not replace those checks.
+
 Shared engineering rules for every AI agent (Codex, Claude). Detail lives in `docs/`; read only what the task needs.
 
 ## Project

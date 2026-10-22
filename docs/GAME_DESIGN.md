@@ -2,7 +2,7 @@
 
 Updated 22 October 2026, Europe/Paris.
 
-**Planning is complete for nine development stories; implementation has not started or been authorized. Wind Up a Toy is the working direction, and Inflate and Release remains an open alternative.** The rules below are the saved working design for the duck backlog, conditional on that concept being retained. They are not implemented behavior or a finalized economy.
+**Wind Up a Toy is selected for the first prototype (D-008), and GAME-001 is the only story authorized for implementation. Inflate and Release remains a possible future reconsideration at the M1 review.** The rules below are the saved working design for the duck backlog, conditional on that concept being retained. They are not implemented behavior or a finalized economy.
 
 This document brings the established [development stories](../../winning-ideas-rbx/docs/DEVELOPMENT_STORIES.md), [concept comparison](../../winning-ideas-rbx/docs/CONCEPT_DIRECTION.md) and [design principles](../../winning-ideas-rbx/docs/GAME_DESIGN_BASE.md) into the development repository. The local [backlog](../stories/BACKLOG.md) maps WT01–WT09 to GAME-001–GAME-009. Historical arrow-through-balloons work and the separate coconut prototype do not override this plan.
 
@@ -118,8 +118,8 @@ If inflation is selected, revise the first three stories and later theme-specifi
 
 | Decision | Needed by |
 |---|---|
-| Wind-up versus inflation-release, and explicit implementation request | Before starting GAME-001 |
-| Actual Studio place and authoritative authored-asset workflow | Before Studio changes |
+| ~~Wind-up versus inflation-release~~ Resolved for the prototype by D-008; reconsider at the M1 review | M1 review |
+| Authored-asset workflow (Studio place resolved for GAME-001: Rojo-built `game-rbx.rbxlx`; the test strip is code-built) | Before Studio-authored geometry is introduced |
 | Exact tuning, route dimensions and reproducible fixtures | Before verifying each relevant story |
 | Profile field contract; later storage schema and save/session implementation | GAME-003; persistence details before GAME-008 |
 | Final UI/world/audio art direction and any required asset rights | Before producing those assets |

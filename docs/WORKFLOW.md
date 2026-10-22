@@ -4,7 +4,9 @@ Updated 22 October 2026, Europe/Paris.
 
 **Plan → Authorized implementation → Review → Validate → User Playtest → User Approval → Commit → Push**
 
-The user owns product choices, playtest approval and Git authorization. Claude's established role is planning/review and Codex's is implementation, subject to the user's actual request and the host's available tools. Use the shared rules in [AGENTS.md](../AGENTS.md) and the applicable current story.
+The user owns product choices, playtest approval and Git authorization. Claude handles planning/review and mandatory creation of every UI component, map design, model, asset, animation and VFX using Claude Design or Claude Code; Codex may implement other gameplay systems within the user's request. Use the shared rules in [AGENTS.md](../AGENTS.md) and the applicable current story.
+
+**Mandatory visual gate:** Claude Design or Claude Code creation → finished preview in Claude Desktop → explicit user approval of the presented version → import/upload/sync/integration → relevant Studio verification. This covers prototypes, placeholders, blockouts and revisions. Animation and VFX previews must move or play to show timing; still images or code alone do not suffice. No affected output may be committed before approval. If Claude creation or Desktop preview is unavailable, report the blocker and leave the visual work pending without a substitute creator/viewer. Preserve existing authored content and approvals for unchanged work. Implementation authorization and later Studio playtesting do not waive this gate; commit/push approval remains required.
 
 ## 1. Current authorization and story lifecycle
 
@@ -29,7 +31,7 @@ Meaningful gameplay features need a story before implementation. Small documenta
 3. For visual work, read the matching `references/**/README.md` and relevant images when present. Preserve approved Figma/native components and shared themes. Supplied bottle screenshots inform readability and flow; they do not establish exact economics or automation rules. Prior coconut UI evidence does not validate this game.
 4. Create or update a story using [stories/TEMPLATE.md](../stories/TEMPLATE.md), store it in `stories/active/GAME-###-short-slug.md`, and maintain [BACKLOG.md](../stories/BACKLOG.md). Keep the original WT alias when importing the existing nine stories so their acceptance criteria remain traceable.
 5. Resolve consequential game design, data schema, monetization and architecture choices with the user when needed, recording actual decisions in [DECISIONS.md](DECISIONS.md). The imported pure Rules, one Config folder, central network contract and ownership requirements are established planning constraints; concrete unresolved tools and APIs remain open.
-6. Before any Studio mutation, establish the intended development project/place and inspect its current state and applicable instructions. An unrelated open place is not the destination. Preserve authored content and confirm the source/export procedure.
+6. Before importing, uploading, syncing or integrating new or revised visual outputs, complete the mandatory Claude Desktop review and explicit approval gate above. Before any Studio mutation, establish the intended development project/place and inspect its current state and applicable instructions. An unrelated open place is not the destination. Preserve authored content and confirm the source/export procedure.
 
 ### Sizing
 
@@ -43,7 +45,7 @@ Delegation capabilities depend on the host. Inspect the tools available in the c
 - **Built-in agent delegation:** use it when the current host actually exposes it and the work benefits from parallelism. Describe ownership and dependencies explicitly; whether children inherit history depends on that tool's contract.
 - **Manual handoff:** when no suitable delegation tool is available, report that limit and provide a self-contained handoff brief. Do not claim a task was delegated when it was not.
 - Give each file one writer. Do not edit files a running worker owns. Shared checkouts share uncommitted changes; verify the actual isolation behavior before choosing a worktree. If worktrees start from committed state, include any needed uncommitted story content in the brief.
-- Workers may prepare independent local assets at distinct paths. One coordinator applies mutations to the shared Studio place and verifies the combined result.
+- Claude Design or Claude Code workers may prepare independent visual assets at distinct paths. After Claude Desktop review and explicit approval of those versions, one coordinator applies mutations to the shared Studio place and verifies the combined result.
 
 ### Delegation brief
 

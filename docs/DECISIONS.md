@@ -76,3 +76,23 @@ Format: `## D-### — Title (YYYY-MM-DD, Status)` then Context · Decision · Al
 - D-002 remains in force for story review, user playtest and Git approval. T3 commands are host-specific. Use supported delegation/Studio tools when available and report exactly what ran; no current tool availability or test result is implied by an older verification note.
 - D-003 remains the saved Git policy. This documentation request does not approve a commit or push. Recheck branch/upstream and tools when such work is requested; the historical statement about `gh` availability is not a current installation check.
 - Persistence requirements promise recovery of the last successfully saved profile after a crash. Unconfirmed changes may be lost; a failed load must not overwrite progress and a failed save must not claim success. This clarifies error handling rather than selecting a storage library/schema.
+
+## D-008 — Wind Up a Toy selected for the first prototype (2026-10-22, Accepted)
+
+**Context:** D-004 kept the concept open between Wind Up a Toy and Inflate and Release, and every story was Blocked on that choice and an explicit implementation request.
+
+**Decision:** The user chose **Wind Up a Toy for this prototype** and explicitly authorized implementing **GAME-001 / WT01 only**. The existing duck-themed stories stand without revision. Inflate and Release remains a possible future reconsideration at the M1 review gate; it isn't built in parallel and gets no interchangeable framework.
+
+**Alternatives:** Select Inflate and Release and revise the first three stories first; keep both open and prototype neither.
+
+**Consequences:** GAME-001 is In Progress. GAME-002–GAME-009 stay Blocked on their dependencies and a further explicit request. The M1 review still decides whether to retain the duck, revise its pacing or reconsider inflation-release before M2.
+
+## D-009 — Local check toolchain (2026-10-22, Accepted)
+
+**Context:** D-006 and GAME-001 require a repeatable build, offline production-rule tests, static analysis and formatting. Only Rojo was pinned.
+
+**Decision:** With user approval, `aftman.toml` pins `lune-org/lune@0.11.1` (offline runner that loads the production Luau modules directly), `Kampfkarren/selene@0.32.0` (lint: Roblox std for adapters, Luau-only std for Rules/Config so engine globals fail there) and `JohnnyMorganz/StyLua@2.6.0` (format check), with Rojo unchanged at 7.7.1. `default.project.json` is unchanged; `tests/` and `tools/` are outside the Rojo map. One entry point, `lune run tools/check`, runs all checks.
+
+**Alternatives:** The `luau` CLI with `luau-analyze` (no Roblox std, separate distribution); a Studio-only test harness (doesn't prove offline purity).
+
+**Consequences:** Rules and Config must stay loadable by relative path in Lune and by instance in Roblox. Selene doesn't type-check, so there is no full type checker. That gap is recorded rather than claimed.

@@ -2,17 +2,17 @@
 
 Updated 22 October 2026, Europe/Paris.
 
-**Planning complete; all implementation is not started.** This is the established three-milestone plan, conditional on the working Wind Up a Toy direction. The concept choice is still open and the saved backlog does not authorize coding. There are no delivery dates or release commitments.
+**GAME-001 is in progress; everything else is not started.** This is the established three-milestone plan for Wind Up a Toy, selected for the prototype by D-008. Only GAME-001 is authorized for implementation. There are no delivery dates or release commitments.
 
 Local GAME-001–GAME-009 IDs map one-to-one to the original WT01–WT09 IDs in the [backlog](../stories/BACKLOG.md). This is a naming adaptation, not nine additional stories. M1 contains exactly WT01–WT03. The full acceptance criteria and evidence requirements live in the linked story files.
 
-## M1 — Initial playable loop (Status: Planned)
+## M1 — Initial playable loop (Status: In Progress — GAME-001 only)
 
 **Goal:** A fresh player releases a duck, watches it stop at a recognizable obstacle, trains normally, and then passes that same obstacle.
 
 | Story | Original ID | Player outcome | Depends on |
 |---|---|---|---|
-| GAME-001 | WT01 | Release a duck and complete an attempt | Concept choice and implementation request |
+| GAME-001 | WT01 | Release a duck and complete an attempt | None (D-008; authorized 22 October 2026) |
 | GAME-002 | WT02 | Pass an obstacle with more Power | GAME-001 |
 | GAME-003 | WT03 | Train and improve the next attempt | GAME-002 |
 
