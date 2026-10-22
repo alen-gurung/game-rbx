@@ -16,3 +16,9 @@ Thumbs.db
 .env.*
 CLAUDE.local.md
 .claude/settings.local.json
+
+# References
+/previews
+/references
+/tools
+/tests
